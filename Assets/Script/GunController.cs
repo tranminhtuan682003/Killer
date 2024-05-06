@@ -21,7 +21,6 @@ public class GunController : MonoBehaviour
         bulletName = new string[] { "Bullet2", "Bullet3" };
     }
 
-
     void Update()
     {
         if (Input.GetMouseButton(0))
@@ -77,9 +76,10 @@ public class GunController : MonoBehaviour
             {
                 if (collision.gameObject.CompareTag(namebullet))
                 {
-                    // Lấy prefab của viên đạn mới
                     newBulletPrefab = collision.gameObject;
+                    bulletPrefab.GetComponent<BulletPlayer>().damage = 10 + 10;
                     ReplaceBulletPrefab();
+
                 }
             }
         }

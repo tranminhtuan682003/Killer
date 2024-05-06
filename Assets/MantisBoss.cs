@@ -9,11 +9,12 @@ public class MantisBoss : MonoBehaviour,IHealth
     [SerializeField] private float speed;
     [SerializeField] private float health,maxHealth;
     private Animator animator;
-    private bool isTouchPlayer;
-    
+    private PolygonCollider2D polygon;
+    public LayerMask playerMask;
     void Start()
     {
         animator = GetComponent<Animator>();
+        polygon = GetComponent<PolygonCollider2D>();
         health = maxHealth;
     }
     void Update()
@@ -24,6 +25,11 @@ public class MantisBoss : MonoBehaviour,IHealth
     {
         Vector3 direction = player.position - transform.position;
         RaycastHit2D hit = Physics2D.Raycast(transform.position,direction.normalized, Mathf.Infinity);
+        RaycastHit2D hit2 = Physics2D.BoxCast(transform.position,polygon.bounds.size,0f,Vector2.right,0f,playerMask);
+        if(hit2.collider != null)
+        {
+             animator.SetBool("AttackLeft", true);
+        }
         Debug.DrawRay(transform.position, direction, Color.green);
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Debug.Log(angle);
@@ -49,10 +55,6 @@ public class MantisBoss : MonoBehaviour,IHealth
                 animator.SetBool("MoveDown", false);
                 animator.SetBool("MoveLeft", true);
                 transform.localScale = new Vector3(5, 5, 5);
-                if (!isTouchPlayer)
-                {
-                    animator.SetBool("AttackLeft", true);
-                }
             }
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
     }
@@ -70,18 +72,5 @@ public class MantisBoss : MonoBehaviour,IHealth
     {
         gameObject.SetActive(false);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isTouchPlayer = true;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isTouchPlayer = false;
-        }
-    }
+
 }

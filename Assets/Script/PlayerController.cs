@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour,IHealth
 {
-    private static PlayerController instance;
-    public static PlayerController Instance { get { return instance; } }
+    public static PlayerController instance { get; private set; }
     private Rigidbody2D rb;
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
