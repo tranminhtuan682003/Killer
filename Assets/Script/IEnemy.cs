@@ -1,6 +1,6 @@
-
-interface IEnemy
+public interface IEnemy
 {
-    void TakeDamage(float amount);
-    void Dead();
+    float health {  get; set; }
+    void Attack();
+    void Die();
 }

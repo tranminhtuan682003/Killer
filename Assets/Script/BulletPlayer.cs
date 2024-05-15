@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class BulletPlayer : MonoBehaviour
 {
-    EnemyController enemy;
-    MantisBoss mantis;
     public float damage = 10;
+    public GameObject damagePrefab;
+    public GameObject floatingPrefap;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        enemy = collision.GetComponent<EnemyController>();
-        mantis = collision.GetComponent<MantisBoss>();
-        if (collision.gameObject.CompareTag("Enemy"))
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            enemy.TakeDamage(damage);
+            damageable.TakeDamage(damage);
+
+            if (damagePrefab != null)
+            {
+                GameObject newDamage = Instantiate(damagePrefab, transform.position,Quaternion.identity);
+                GameObject newFloating = Instantiate(floatingPrefap, transform.position, Quaternion.identity);
+                Destroy(newDamage, 0.1f); 
+                Destroy(newFloating, 0.1f);
+            }
+
             gameObject.SetActive(false);
-        }
-        if (collision.gameObject.CompareTag("Mantis"))
-        {
-            mantis.TakeDamage(damage);
-            gameObject.SetActive(false);
-        }
-        if (collision.gameObject.CompareTag("Tilemap"))
-        {
-            gameObject.SetActive(false);
-        }
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            gameObject.SetActive(false) ;
         }
     }
 }
-
