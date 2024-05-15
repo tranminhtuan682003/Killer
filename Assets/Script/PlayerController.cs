@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour,IHealth
 {
@@ -8,18 +7,22 @@ public class PlayerController : MonoBehaviour,IHealth
     private Rigidbody2D rb;
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float health, maxHealth;
+    [SerializeField] private float healh,maxHealh;
+    public Slider slideHealth;
     private Animator animator;
-
-    private bool checkFlip;
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
     }
     void Start()
     {
-        health = maxHealth;
+        healh = maxHealh;
+        slideHealth.value = 1;
     }
     void Update()
     {
@@ -53,18 +56,19 @@ public class PlayerController : MonoBehaviour,IHealth
         if(Input.GetMouseButtonDown(0))
         {
             animator.SetBool("IsShoot", true);
-
+            MusicManager.instance.PlayerSounds("Shoting");
         }
         if (Input.GetMouseButtonUp(0))
         {
             animator.SetBool("IsShoot", false);
+            MusicManager.instance.StopPlayerSounds("Shoting");
         }
     }
     public void TakeDamage(float amount)
     {
-        health -= amount;
-        animator.SetBool("IsHit", true);
-        if (health <= 0)
+        healh -= amount;
+        slideHealth.value -= amount/maxHealh;
+        if (healh <= 0)
         {
             Dead();
         }
