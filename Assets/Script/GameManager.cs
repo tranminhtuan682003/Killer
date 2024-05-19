@@ -58,6 +58,10 @@ public class GameManager : MonoBehaviour
             MusicManager.instance.BackgroundSounds("LetGame");
         }
     }
+    public void EndGame()
+    {
+        UIScene2.instance.EndGame();
+    }
     public void Exit()
     {
         foreach(var item in panelSetting)

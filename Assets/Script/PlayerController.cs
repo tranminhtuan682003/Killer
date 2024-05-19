@@ -27,10 +27,10 @@ public class PlayerController : MonoBehaviour,IHealth
     void Update()
     {
         Move();
+        Attack();
         MousePosition();
 
     }
-
     private void Move()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour,IHealth
         {
             animator.SetBool("IsRun", false);
         }
-        Attack();
     }
     private void MousePosition()
     {
@@ -75,6 +74,7 @@ public class PlayerController : MonoBehaviour,IHealth
     }
     public void Dead()
     {
+        GameManager.instance.EndGame();
         gameObject.SetActive(false);
     }
 }

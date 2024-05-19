@@ -6,8 +6,8 @@ public class BosManager : MonoBehaviour
 {
     public FactoryEnemy factoryEnemy;
     private float spawnInterval = 1f;
-    private float intervalDecreaseRate = 0.1f; // Giảm khoảng thời gian sinh boss đi 0.1 giây mỗi 10 giây
-    private float minSpawnInterval = 0.1f; // Giới hạn tối thiểu để tránh sinh quá nhanh
+    private float intervalDecreaseRate = 0.1f;
+    private float minSpawnInterval = 0.1f;
 
     void Start()
     {
@@ -35,6 +35,6 @@ public class BosManager : MonoBehaviour
     void OnDestroy()
     {
         CancelInvoke("SpawnBoss");
-        StopAllCoroutines(); // Dừng tất cả coroutine khi đối tượng bị phá hủy
+        StopAllCoroutines();
     }
 }
