@@ -12,7 +12,7 @@ public class GunController : MonoBehaviour
     private List<GameObject> bulletPool;
     private float nextFireTime;
     [SerializeField] private float bulletSpeed = 1f;
-    private GameObject newBulletPrefab; // Biến lưu trữ prefab của viên đạn mới
+    private GameObject newBulletPrefab;
     private string[] bulletName;
 
     void Start()
