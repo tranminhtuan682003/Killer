@@ -9,6 +9,7 @@ public class GunController : MonoBehaviour
     [SerializeField] private Transform parentBullet;
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private int amountBullet;
+
     private List<GameObject> bulletPool;
     private float nextFireTime;
     [SerializeField] private float bulletSpeed = 1f;
@@ -28,7 +29,7 @@ public class GunController : MonoBehaviour
             if (Time.time >= nextFireTime)
             {
                 Fire();
-                nextFireTime = Time.time + 0.1f / fireRate;
+                nextFireTime = Time.time + 0.05f / fireRate;
             }
         }
     }
@@ -77,7 +78,8 @@ public class GunController : MonoBehaviour
                 if (collision.gameObject.CompareTag(namebullet))
                 {
                     newBulletPrefab = collision.gameObject;
-                    bulletPrefab.GetComponent<BulletPlayer>().damage = 10 + 10;
+                    float damagePlayer = bulletPrefab.GetComponent<BulletPlayer>().damage = 50f;
+                    Debug.Log("damage = " + damagePlayer);
                     ReplaceBulletPrefab();
 
                 }
