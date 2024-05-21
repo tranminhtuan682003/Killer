@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour,IHealth
+public class PlayerController : MonoBehaviour, IHealth
 {
     public static PlayerController instance { get; private set; }
     private Rigidbody2D rb;
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float healh,maxHealh;
+    public float healh, maxHealh;
     public Slider slideHealth;
     private Animator animator;
     private void Awake()
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour,IHealth
         float vertical = Input.GetAxisRaw("Vertical");
         rb.velocity = new Vector2(horizontal * speed, vertical * speed);
         animator.SetBool("IsRun", true);
-        if(horizontal == 0 && vertical == 0)
+        if (horizontal == 0 && vertical == 0)
         {
             animator.SetBool("IsRun", false);
         }
@@ -52,12 +52,12 @@ public class PlayerController : MonoBehaviour,IHealth
     }
     private void Attack()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             animator.SetBool("IsShoot", true);
             MusicManager.instance.PlayerSounds("Shoting");
         }
-        if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
         {
             animator.SetBool("IsShoot", false);
             MusicManager.instance.StopPlayerSounds("Shoting");
@@ -66,10 +66,19 @@ public class PlayerController : MonoBehaviour,IHealth
     public void TakeDamage(float amount)
     {
         healh -= amount;
-        slideHealth.value -= amount/maxHealh;
+        slideHealth.value -= amount / maxHealh;
         if (healh <= 0)
         {
             Dead();
+        }
+    }
+    public void Bloodsucking(float amount)
+    {
+        if(healh < 97)
+        {
+            healh += amount;
+            slideHealth.value += amount / maxHealh;
+            Debug.Log("da cong them mau 2 ");
         }
     }
     public void Dead()

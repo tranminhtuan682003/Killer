@@ -10,7 +10,7 @@ public class MusicManager : MonoBehaviour
     public List<Sound> backgroundSounds;
     private Queue<Sound> backgroundQueue = new Queue<Sound>();
     private AudioSource currentBackgroundSource;
-
+    private bool isVolumeMuted = false;
     private void Awake()
     {
         if (instance == null)
@@ -91,9 +91,12 @@ public class MusicManager : MonoBehaviour
 
     public void SetVolume()
     {
+        isVolumeMuted = !isVolumeMuted;
+        float newVolume = isVolumeMuted ? 0f : 1f;
+
         foreach (Sound music in backgroundSounds)
         {
-            music.soundsource.volume = 0;
+            music.soundsource.volume = newVolume;
         }
     }
     public void EditVolume( float value)

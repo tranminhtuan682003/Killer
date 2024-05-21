@@ -15,12 +15,11 @@ public class BosManager : MonoBehaviour
         InvokeRepeating("SpawnBoss", 0f, spawnInterval);
     }
 
-    void SpawnBoss()
+    private void SpawnBoss()
     {
         string bossType = Random.Range(0, 2) == 0 ? "RockEnemy" : "IceBoss";
         IEnemy boss = factoryEnemy.CreateBoss(bossType);
     }
-
     IEnumerator AdjustSpawnRate()
     {
         while (spawnInterval > minSpawnInterval)
@@ -31,8 +30,7 @@ public class BosManager : MonoBehaviour
             InvokeRepeating("SpawnBoss", 0f, spawnInterval);
         }
     }
-
-    void OnDestroy()
+    private void OnDestroy()
     {
         CancelInvoke("SpawnBoss");
         StopAllCoroutines();

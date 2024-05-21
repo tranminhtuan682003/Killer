@@ -24,7 +24,7 @@ public class RockEnemy : MonoBehaviour,IEnemy,IDamageable
     {
         if(player != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position,player.transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position,player.transform.position,Random.Range(speed, speed * 2) * Time.deltaTime);
         }
         else
         {
@@ -49,6 +49,8 @@ public class RockEnemy : MonoBehaviour,IEnemy,IDamageable
     {
         animator.SetBool("IsDead", true);
         MusicManager.instance.PlayerSounds("BossDie");
+        UIScene2.instance.AddScore(5);
+        player.GetComponent<PlayerController>().Bloodsucking(3);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
