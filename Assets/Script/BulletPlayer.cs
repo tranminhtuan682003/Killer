@@ -14,5 +14,9 @@ public class BulletPlayer : MonoBehaviour
             FactoryEnemy.Instance.UseFloatingPrefab(transform,0.1f);
             gameObject.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("Tilemap"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

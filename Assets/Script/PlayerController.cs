@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour, IHealth
         {
             healh += amount;
             slideHealth.value += amount / maxHealh;
-            Debug.Log("da cong them mau 2 ");
+            Debug.Log("da cong them mau");
         }
     }
     public void Dead()
